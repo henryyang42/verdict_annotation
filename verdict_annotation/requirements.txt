@@ -1,0 +1,5 @@
+Django==2.1
+django-bootstrap-form==3.4
+requests
+uwsgi
+tqdm
