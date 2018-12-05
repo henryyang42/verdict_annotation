@@ -18,6 +18,12 @@ class Verdict(models.Model):
     date = models.CharField(max_length=10, default='')
     raw = models.TextField(blank=True)
 
+    def __str__(self):
+        return "{court_type}-{court_no}-{verdict_no} ({date})".format(
+            court_type=self.court_type, court_no=self.court_no,
+            verdict_no=self.verdict_no, date=self.date
+        )
+
 
 class Annotation(models.Model):
     NOT_DONE, PENDING, DONE = 'Not done', 'Pass', 'Done'

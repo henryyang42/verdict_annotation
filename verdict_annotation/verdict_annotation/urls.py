@@ -21,8 +21,8 @@ from django.views.generic import RedirectView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('editor/', include('editor.urls')),
+    path('anno/', include('editor.urls')),
     path('auth/', include('auth.urls')),
-    path('', RedirectView.as_view(url='/editor/list_agent')),
+    path('', RedirectView.as_view(url='/anno/list')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) \
   + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

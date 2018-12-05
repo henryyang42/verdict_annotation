@@ -2,30 +2,24 @@
 {% block body %}
 
 <div class="container-fluid">
-  <h2>Reaction Script for Agent <b>{{ agent.agent_name }}</b></h2>
+  <h2>Annotated Verdicts</h2>
   <table class="table table-striped">
     <thead>
       <tr>
         <th>Last Edited</th>
-        <th>Intent Name</th>
         <th>Author</th>
-        <th>Edit</th>
-        <th>Delete</th>
+        <th>Identifier</th>
+        <th>Content</th>
       </tr>
     </thead>
     <tbody>
 
       {% for annotation in annotations %}
       <tr>
-        <td width="5%">{{ annotation.update_time }}</td>
-        <td width="20%">{{ annotation.intent }}</td>
-        <td width="20%">{{ annotation.author.username }}</td>
-        <td width="5%">
-
-        </td>
-        <td width="5%">
-
-        </td>
+        <td width="6%">{{ annotation.update_time }}</td>
+        <td width="6%">{{ annotation.author.username }}</td>
+        <td width="12%">{{ annotation.verdict }}</td>
+        <td width="76%"><a href="/anno?id={{ annotation.verdict.id }}">{{ annotation.verdict.raw|truncatechars:200 }}</a></td>
       </tr>
       {% endfor %}
     </tbody>
