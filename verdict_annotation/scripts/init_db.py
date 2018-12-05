@@ -20,12 +20,11 @@ if __name__ == '__main__':
     for i in range(settings.ANNOTATORS):
         password = random_password()
         username = 'annotator00{}'.format(i + 1)
-        user =  User.objects.create_user(username=username, password=password)
+        user = User.objects.create_user(username=username, password=password)
         users.append(user)
         passwords.append(password)
 
-
-    paths = glob.glob("modify/*.json")[:100]
+    paths = glob.glob("modify/*.json")[:1000]
     print('Inserting {} verdicts into DB...'.format(len(paths)))
     for i, path in enumerate(tqdm.tqdm(paths)):
         _, filename = path.split('/')
@@ -42,6 +41,7 @@ if __name__ == '__main__':
             Annotation.objects.create(
                 author=users[i % settings.ANNOTATORS],
                 verdict=verdict,
+                status=Annotation.DONE if i % 3 else Annotation.NOT_DONE  # Testing
             )
     with open('accounts.csv', 'w') as csvfile:
         fieldnames = ['username', 'password', 'annotation_ct']

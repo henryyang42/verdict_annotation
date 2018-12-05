@@ -36,7 +36,13 @@ class Annotation(models.Model):
     author = models.ForeignKey(User, on_delete=models.PROTECT)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default=NOT_DONE)
     update_time = models.DateTimeField(default=timezone.now)
+
     annotation = models.TextField(blank=True)
+    guilty = models.BooleanField(default=False)
+    sentence_year = models.IntegerField(default=0)
+    sentence_month = models.IntegerField(default=0)
+    sentence_day = models.IntegerField(default=0)
+    fine = models.IntegerField(default=0)
 
     def save(self, **kwargs):
         self.update_time = timezone.now()

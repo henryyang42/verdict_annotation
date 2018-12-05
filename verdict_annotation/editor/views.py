@@ -39,23 +39,22 @@ def get_annotation_status(user):
 def editor(request):
     user = request.user
     annotation_status = get_annotation_status(user)
+    annotation = None
+    sentences = []
     if request.method == 'GET':
         id_ = request.GET.get('id')
         if id_:
             verdict = get_object_or_404(Verdict, id=id_)
             annotation = get_object_or_404(Annotation, author=user, verdict=verdict)
-        else:
-            if annotation_status['remaining']:
-                annotation = Annotation.objects.filter(author=user, status=Annotation.UNDONE)[0]
-                entry = annotation.entry
-            else:
-                all_finished = True
-                return render(request, 'editor/editor.html', {
-                    'annotation_status': annotation_status
-                })
-        logger.info('%s ANNOTATIING annotation.id=%s' % (user, annotation.id))
-        sentences = json.loads(verdict.raw)
+
+        if annotation_status['remaining']:
+            annotation = Annotation.objects.filter(author=user, status=Annotation.NOT_DONE)[0]
+            logger.info('%s ANNOTATIING annotation.id=%s' % (user, annotation.id))
+            sentences = json.loads(annotation.verdict.raw)
+
         return render(request, 'editor/editor.html', {
+            'sentences': sentences,
+            'annotation': annotation,
             'annotation_status': annotation_status
         })
 
@@ -64,9 +63,10 @@ def editor(request):
         logger.info('%s POSTED %s' % (user, json.dumps(request.POST)))
         verdict = get_object_or_404(Verdict, id=POST['id'])
         annotation = get_object_or_404(Annotation, author=user, verdict=verdict)
-
+        sentences = json.loads(verdict.raw)
+        print(POST)
         annotation.save()
-    return redirect('/annotate/')
+    return redirect('/anno/')
 
 
 @login_required(login_url='/auth/login')

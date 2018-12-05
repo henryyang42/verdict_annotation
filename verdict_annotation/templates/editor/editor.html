@@ -1,122 +1,32 @@
 {% extends "index.html" %}
 
+
 {% block body %}
-<form class="form-horizontal col-sm-10 col-sm-offset-1" method="POST">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.2/css/bootstrap3/bootstrap-switch.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.2/js/bootstrap-switch.min.js"></script><form class="form-horizontal col-sm-10 col-sm-offset-1" method="POST">
   {% csrf_token %}
-  <h3 class="text-center">Intent Information</h3>
-  <input type="hidden" name="id" value="{{ rs.id }}">
-  <div class="form-group">
-    <label for="intent" class="col-sm-2 control-label">Intent Name</label>
-    <div class="col-sm-10">
-      <input type="text" class="form-control" name="intent" value="{{ rs.intent }}" placeholder="Intent name same as Dialogflow defined" required disabled>
-    </div>
-  </div>
-  <div class="form-group">
-    <label for="speech" class="col-sm-2 control-label">Speech</label>
-    <div class="col-sm-10">
-      <input type="text" class="form-control" name="speech" value="{{ rs.speech }}" placeholder="" disabled>
-    </div>
-  </div>
-    <div class="form-group">
-    <label for="vision" class="col-sm-2 control-label">Vision</label>
-    <div class="col-sm-10">
-      <input type="text" class="form-control" name="vision" value="{{ rs.vision }}" placeholder="" disabled>
-    </div>
-  </div>
-  <div class="form-group">
-    <label for="sensor" class="col-sm-2 control-label">Sensor</label>
-    <div class="col-sm-10">
-      <input type="text" class="form-control" name="sensor" value="{{ rs.sensor }}" placeholder="" disabled>
-    </div>
-  </div>
-  <div class="form-group">
-    <label for="system" class="col-sm-2 control-label">System</label>
-    <div class="col-sm-10">
-      <input type="text" class="form-control" name="system" value="{{ rs.system }}" placeholder="" disabled>
-    </div>
-  </div>
-  <hr>
-
-  <h3 class="text-center">Robot Behavior</h3>
-
-{% for action in behavior %}
-  <div class="panel panel-default">
-    <div class="panel-heading">
-        <span class>Step {{ forloop.counter }}</span>
-      <!--button class="btn btn-primary btn-xs col-sm-offset-4" type="button"><span class="glyphicon glyphicon-plus"></span></button>
-      <button-- class="btn btn-danger btn-xs pull-right" type="button" disabled title="Why is it disabled?"><span class="glyphicon glyphicon-trash"></span></button-->
-    </div>
-    <div class="panel-body">
-      <h4>Control</h4>
-      <div class="form-group">
-        <label for="head-{{ forloop.counter }}" class="col-sm-2 control-label">Head</label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" name="head-{{ forloop.counter }}" value="{{ action.head }}" placeholder="">
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="torso-{{ forloop.counter }}" class="col-sm-2 control-label">Torso</label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" name="torso-{{ forloop.counter }}" value="{{ action.torso }}" placeholder="">
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="chest-{{ forloop.counter }}" class="col-sm-2 control-label">Chest</label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" name="chest-{{ forloop.counter }}" value="{{ action.chest }}" placeholder="">
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="arms-{{ forloop.counter }}" class="col-sm-2 control-label">Arms</label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" name="arms-{{ forloop.counter }}" value="{{ action.arms }}" placeholder="">
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="grippers-{{ forloop.counter }}" class="col-sm-2 control-label">Grippers</label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" name="grippers-{{ forloop.counter }}" value="{{ action.grippers }}" placeholder="">
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="base-{{ forloop.counter }}" class="col-sm-2 control-label">Base</label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" name="base-{{ forloop.counter }}" value="{{ action.base }}" placeholder="">
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="function-{{ forloop.counter }}" class="col-sm-2 control-label">Function</label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" name="function-{{ forloop.counter }}" value="{{ action.function }}" placeholder="">
-        </div>
-      </div>
-      <hr>
-      <div class="form-group">
-        <label for="speech-{{ forloop.counter }}" class="col-sm-2 control-label">Speech</label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" name="speech-{{ forloop.counter }}" value="{{ action.speech }}" placeholder="">
-        </div>
-      </div>
-      <hr>
-      <div class="form-group">
-        <label for="system-{{ forloop.counter }}" class="col-sm-2 control-label">System</label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" name="system-{{ forloop.counter }}" value="{{ action.system }}" placeholder="">
-        </div>
-      </div>
-      <hr>
-      <div class="form-group">
-        <label for="execution_time-{{ forloop.counter }}" class="col-sm-2 control-label">Execution Time</label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" name="execution_time-{{ forloop.counter }}" value="{{ action.execution_time }}" placeholder="">
-        </div>
-      </div>
-    </div>
-    <!--div class="panel-footer">
-      <button class="btn btn-primary btn-xs col-sm-offset-5" type="button" ><span class="glyphicon glyphicon-plus"></span></button>
-    </div-->
-  </div>
-{% endfor %}
+  <h3 class="text-center">Verdict Annotation</h3>
+  <input type="hidden" name="id" value="{{ annotation.id }}">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Content</th>
+        <th>Insult</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for sentence in sentences %}
+      <tr>
+        <td>{{ sentence }}</td>
+        <td>
+          <div class="col-sm-6 col-lg-4 switch">
+            <input type="checkbox" name="insult-{{ forloop.counter0 }}" data-on-text="Yes" data-off-text="No">
+          </div>
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
   <button class="btn btn-primary pull-right" type="submit" style="margin-bottom: 30px">Submit</button>
 </form>
 <style>
@@ -188,6 +98,7 @@ $(document).ready(function() {
         return false;
     });
 });
+
  /*Scroll to top when arrow up clicked END*/
 </script>
 <a id="back2Top" title="Back to top" href="#">&#10148;</a>
