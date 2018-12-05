@@ -1,0 +1,26 @@
+version: '2'
+services:
+    nginx:
+        container_name: nginx-container        
+        build: ./nginx
+        restart: always
+        ports:
+        - "80:80"
+        - "8000:80" 
+        volumes:        
+        - ./verdict_annotation:/docker_editor
+        - ./log:/var/log/nginx              
+        depends_on:
+        - editor
+        
+    editor:
+        container_name: annotation-container
+        build: verdict_annotation
+        restart: always
+        # command: uwsgi  --emperor uwsgi.ini         
+        command: uwsgi --ini uwsgi.ini         
+        ports:
+        - "8001:8000"
+        volumes:
+        - ./verdict_annotation:/docker_editor
+

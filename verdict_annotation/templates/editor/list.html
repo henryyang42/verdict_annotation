@@ -5,42 +5,39 @@
   <h2>Reaction Script for Agent <b>{{ agent.agent_name }}</b></h2>
   <table class="table table-striped">
     <thead>
-    <tr>
-      <th>Last Edited</th>
-      <th>Intent Name</th>
-      <th>Author</th>
-      <th>Edit</th>
-      <th>Delete</th>
-    </tr>
+      <tr>
+        <th>Last Edited</th>
+        <th>Intent Name</th>
+        <th>Author</th>
+        <th>Edit</th>
+        <th>Delete</th>
+      </tr>
     </thead>
     <tbody>
 
-    {% for rs in reaction_scripts %}
+      {% for annotation in annotations %}
       <tr>
-        <td width="20%">{{ rs.update_time }}</td>
-        <td width="20%">{{ rs.intent }}</td>
-        <td width="20%">{{ rs.author.username }}</td>
+        <td width="5%">{{ annotation.update_time }}</td>
+        <td width="20%">{{ annotation.intent }}</td>
+        <td width="20%">{{ annotation.author.username }}</td>
         <td width="5%">
-          <a class="btn btn-primary btn-xs pull-right" type="button" href="/editor?id={{ rs.id }}"><span class="glyphicon glyphicon-edit"></span></a>
+
         </td>
         <td width="5%">
-          <a class="btn btn-danger btn-xs pull-right" type="button" href="/editor/delete?id={{ rs.id }}"
-             onclick="return confirm('Are you sure you want to delete reaction script \'{{ rs.intent }}\'?\nThis action is invertible.')">
-            <span class="glyphicon glyphicon-trash"></span>
-          </a>
+
         </td>
       </tr>
-    {% endfor %}
+      {% endfor %}
     </tbody>
   </table>
 
   <ul class="pager">
-    {% if reaction_scripts.has_previous %}
-      <li><a href="?page={{ reaction_scripts.previous_page_number }}">&larr; Previous</a></li>
+    {% if annotations.has_previous %}
+    <li><a href="?page={{ annotations.previous_page_number }}">&larr; Previous</a></li>
     {% endif %}
-    <span class="current">Page {{ reaction_scripts.number }} of {{ reaction_scripts.paginator.num_pages }}.</span>
-    {% if reaction_scripts.has_next %}
-      <li><a href="?page={{ reaction_scripts.next_page_number }}">Next &rarr;</a></li>
+    <span class="current">Page {{ annotations.number }} of {{ annotations.paginator.num_pages }}.</span>
+    {% if annotations.has_next %}
+    <li><a href="?page={{ annotations.next_page_number }}">Next &rarr;</a></li>
     {% endif %}
   </ul>
 </div>
