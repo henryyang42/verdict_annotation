@@ -38,6 +38,14 @@
         <li><a href="/auth/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
       </ul>
     </div>
+    <div class="progress navbar-right navbar-text" style="width: 25%; margin: 1%">
+      <div class="progress-bar" style="width: {{ annotation_status.remaining_pct }}%">
+        <a href="/anno/list?status={{ annotation_status.Annotation.NOT_DONE }}" style="color:aliceblue">{{ annotation_status.remaining }} {{ annotation_status.Annotation.NOT_DONE }}</a>
+      </div>
+      <div class="progress-bar progress-bar-success" style="width: {{ annotation_status.done_pct }}%">
+        <a href="/anno/list?status={{ annotation_status.Annotation.DONE }}" style="color:aliceblue">{{ annotation_status.done }} {{ annotation_status.Annotation.DONE }}</a>
+      </div>
+    </div>
     {% else %}
     <p class="navbar-text navbar-right">
       <b><a href="/auth/login" class="navbar-link"><span class="glyphicon glyphicon-log-in"></span> Sign in</a></b>

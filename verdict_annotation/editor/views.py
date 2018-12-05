@@ -19,18 +19,19 @@ def get_annotation_status(user):
     all_ct = Annotation.objects.filter(author=user).count()
     done_ct = Annotation.objects.filter(author=user, status=Annotation.DONE).count()
     pending_ct = Annotation.objects.filter(author=user, status=Annotation.PENDING).count()
-    undone_ct = Annotation.objects.filter(author=user, status=Annotation.NOT_DONE).count()
+    not_done_ct = Annotation.objects.filter(author=user, status=Annotation.NOT_DONE).count()
     smoothing = 300
-    smct = len([ct for ct in [done_ct, pending_ct, undone_ct] if ct])
+    smct = len([ct for ct in [done_ct, pending_ct, not_done_ct] if ct])
     return {
         'done_pct': done_ct and (done_ct + smoothing) / (all_ct + smct * smoothing) * 100,
         'pending_pct': pending_ct and (pending_ct + smoothing) / (all_ct + smct * smoothing) * 100,
-        'remaining_pct': undone_ct and (undone_ct + smoothing) / (all_ct + smct * smoothing) * 100,
+        'remaining_pct': not_done_ct and (not_done_ct + smoothing) / (all_ct + smct * smoothing) * 100,
         'done': done_ct,
         'pending': pending_ct,
         'pass': pending_ct,
-        'remaining': undone_ct,
-        'undone': undone_ct
+        'remaining': not_done_ct,
+        'not_done': not_done_ct,
+        'Annotation': Annotation
     }
 
 
@@ -38,7 +39,6 @@ def get_annotation_status(user):
 def editor(request):
     user = request.user
     annotation_status = get_annotation_status(user)
-    Anno = Annotation
     if request.method == 'GET':
         id_ = request.GET.get('id')
         if id_:
@@ -50,15 +50,19 @@ def editor(request):
                 entry = annotation.entry
             else:
                 all_finished = True
-                return render(request, 'editor/editor.html', locals())
+                return render(request, 'editor/editor.html', {
+                    'annotation_status': annotation_status
+                })
         logger.info('%s ANNOTATIING annotation.id=%s' % (user, annotation.id))
         sentences = json.loads(verdict.raw)
-        return render(request, 'editor/editor.html', locals())
+        return render(request, 'editor/editor.html', {
+            'annotation_status': annotation_status
+        })
 
     elif request.method == 'POST':
         POST = request.POST
         logger.info('%s POSTED %s' % (user, json.dumps(request.POST)))
-        verdict = get_object_or_404(verdict, id=POST['id'])
+        verdict = get_object_or_404(Verdict, id=POST['id'])
         annotation = get_object_or_404(Annotation, author=user, verdict=verdict)
 
         annotation.save()
@@ -67,9 +71,13 @@ def editor(request):
 
 @login_required(login_url='/auth/login')
 def list_annotation(request):
+    user = request.user
     page = request.GET.get('page')
+    status = request.GET.get('status')
 
-    annotations = Annotation.objects.filter(author=request.user, status=Annotation.DONE).order_by('-update_time')
+    annotations = Annotation.objects.filter(author=user).order_by('-update_time')
+    if status:
+        annotations = annotations.filter(status=status)
     paginator = Paginator(annotations, 100)  # Show 100 contacts per page
     try:
         annotations = paginator.page(page)
@@ -81,4 +89,5 @@ def list_annotation(request):
         annotations = paginator.page(paginator.num_pages)
     return render(request, 'editor/list.html', {
         'annotations': annotations,
+        'annotation_status': get_annotation_status(user),
     })
