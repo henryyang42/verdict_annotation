@@ -24,7 +24,7 @@ if __name__ == '__main__':
         users.append(user)
         passwords.append(password)
 
-    paths = glob.glob("modify/*.json")[:1000]
+    paths = glob.glob("modify/*.json")
     print('Inserting {} verdicts into DB...'.format(len(paths)))
     for i, path in enumerate(tqdm.tqdm(paths)):
         _, filename = path.split('/')

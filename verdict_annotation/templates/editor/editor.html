@@ -21,7 +21,7 @@
         <td>{{ sentence }}</td>
         <td>
           <div class="col-sm-6 col-lg-4 switch">
-            <input type="checkbox" name="insult-{{ forloop.counter0 }}" data-on-text="Yes" data-off-text="No">
+            <input type="checkbox" name="insult-{{ forloop.counter0 }}" data-on-text="Yes" data-off-text="No" {% if forloop.counter0 in related_indexes %} checked {% endif %}>
           </div>
         </td>
       </tr>

@@ -37,7 +37,7 @@ class Annotation(models.Model):
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default=NOT_DONE)
     update_time = models.DateTimeField(default=timezone.now)
 
-    annotation = models.TextField(blank=True)
+    annotation = models.TextField(default='[]')
     guilty = models.BooleanField(default=False)
     sentence_year = models.IntegerField(default=0)
     sentence_month = models.IntegerField(default=0)

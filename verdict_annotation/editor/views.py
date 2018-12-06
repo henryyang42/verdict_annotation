@@ -41,20 +41,29 @@ def editor(request):
     annotation_status = get_annotation_status(user)
     annotation = None
     sentences = []
+    related_indexes = []
     if request.method == 'GET':
         id_ = request.GET.get('id')
         if id_:
             verdict = get_object_or_404(Verdict, id=id_)
             annotation = get_object_or_404(Annotation, author=user, verdict=verdict)
 
-        if annotation_status['remaining']:
+        elif annotation_status['remaining']:
             annotation = Annotation.objects.filter(author=user, status=Annotation.NOT_DONE)[0]
             logger.info('%s ANNOTATIING annotation.id=%s' % (user, annotation.id))
-            sentences = json.loads(annotation.verdict.raw)
+
+        if annotation:
+            try:
+                sentences = json.loads(annotation.verdict.raw)
+                related_indexes = json.loads(annotation.annotation)
+            except:
+                import traceback
+                traceback.print_exc()
 
         return render(request, 'editor/editor.html', {
             'sentences': sentences,
             'annotation': annotation,
+            'related_indexes': related_indexes,
             'annotation_status': annotation_status
         })
 
@@ -64,6 +73,18 @@ def editor(request):
         verdict = get_object_or_404(Verdict, id=POST['id'])
         annotation = get_object_or_404(Annotation, author=user, verdict=verdict)
         sentences = json.loads(verdict.raw)
+        annotation.guilty = True if POST['guilty'] else False
+        annotation.sentence_year = int(POST['sentence_year'])
+        annotation.sentence_month = int(POST['sentence_month'])
+        annotation.sentence_day = int(POST['sentence_day'])
+        annotation.fine = int(POST['fine'])
+
+        for key in POST.keys():
+            if 'insult-' in key:
+                _, idx = key.split('-')
+                assert(int(idx) < len(sentences) and int(idx) >= 0)
+                related_indexes.append(int(idx))
+        annotation.annotation = json.dumps(related_indexes)
         print(POST)
         annotation.save()
     return redirect('/anno/')
