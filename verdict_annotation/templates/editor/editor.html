@@ -3,15 +3,16 @@
 
 {% block body %}
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.2/css/bootstrap3/bootstrap-switch.min.css" rel="stylesheet" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.2/js/bootstrap-switch.min.js"></script><form class="form-horizontal col-sm-10 col-sm-offset-1" method="POST">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.2/js/bootstrap-switch.min.js"></script>
+<form class="form-horizontal col-sm-10 col-sm-offset-1" method="POST" onkeydown="if(event.keyCode==13)return false;">
   {% csrf_token %}
-  <h3 class="text-center">Verdict Annotation</h3>
+  <h3 class="text-center">{{ annotation.verdict }}</h3>
   <input type="hidden" name="id" value="{{ annotation.id }}">
   <table class="table table-hover">
     <thead>
       <tr>
-        <th>Content</th>
-        <th>Insult</th>
+        <th>判決書內文</th>
+        <th>是否與公然侮辱相關</th>
       </tr>
     </thead>
     <tbody>
@@ -27,7 +28,65 @@
     {% endfor %}
     </tbody>
   </table>
-  <button class="btn btn-primary pull-right" type="submit" style="margin-bottom: 30px">Submit</button>
+  <hr>
+  <div class="panel panel-info pull-right" style="width: 50%">
+    <div class="panel-heading">
+    <h3 class="panel-title">判決總整理</h3>
+    </div>
+
+    <div class="panel-body">
+      <div class="form-inline row">
+        <div class="col-md-2">
+          <h4>是否有罪:</h4>
+        </div>
+        <div class="form-check checkbox-inline col-md-4">
+          <input class="form-check-input" type="radio" name="guilty" id="not_guilty" value="not_guilty" {% if not annotation.guilty %} checked {% endif %}>
+          <label class="form-check-label" for="not_guilty">無罪</label>
+          </div>
+        <div class="form-check checkbox-inline col-md-4">
+          <input class="form-check-input" type="radio" name="guilty" id="guilty" value="guilty" {% if annotation.guilty %} checked {% endif %}>
+          <label class="form-check-label" for="guilty">有罪</label>
+        </div>
+      </div>
+      <hr>
+      <div class="form-inline row">
+        <div class="col-md-2">
+          <h4>刑期:</h4>
+          <div class="input-group col-md-4">
+          </div>
+
+        </div>
+        <div class="input-group col-md-3">
+          <input class="form-control" type="number" name="sentence_year" value="{{ annotation.sentence_year }}">
+          <span for="sentence_year" class="input-group-addon">年</span>
+        </div>
+
+        <div class="input-group col-md-3">
+          <input class="form-control" type="number" name="sentence_month" value="{{ annotation.sentence_month }}">
+          <span for="sentence_month" class="input-group-addon">月</span>
+        </div>
+
+        <div class="input-group col-md-3">
+          <input class="form-control" type="number" name="sentence_day" value="{{ annotation.sentence_day }}">
+          <span for="sentence_day" class="input-group-addon">日</span>
+        </div>
+      </div>
+      <hr>
+      <div class="form-inline row">
+        <div class="col-md-2">
+          <h4>罰金(鍰):</h4>
+        </div>
+        <div class="input-group col-md-9">
+          <input class="form-control" type="number" name="fine" value="{{ annotation.fine }}">
+          <span for="fine" class="input-group-addon">元</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-footer clearfix">
+      <button class="btn btn-primary pull-right" type="submit">送出</button>
+    </div>
+  </div>
 </form>
 <style>
   #back2Bottom {

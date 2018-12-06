@@ -110,7 +110,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'zh-hant'
 
 TIME_ZONE = 'Asia/Taipei'
 
@@ -134,8 +134,10 @@ STATICFILES_DIRS = [
 # Custom global variables used to display on HTML
 
 SITE_NAME = 'SUSAN'
+FOOTER_TEXT = '逃吉吉'
 ANNOTATORS = 5
 
 SETTINGS_EXPORT = [
     'SITE_NAME',
+    'FOOTER_TEXT',
 ]

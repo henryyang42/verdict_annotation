@@ -31,11 +31,11 @@
     {% if user.is_authenticated %}
     <div class="dropdown navbar-right">
       <a class="dropdown-toggle navbar-text" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-user"></span>
-        Signed in as {{ user.username }}
+        以 {{ user.username }} 登入
         <span class="caret"></span></a>
       <ul class="dropdown-menu">
-        <li><a href="/anno/list"><span class="glyphicon glyphicon-folder-open"></span> View Repository</a></li>
-        <li><a href="/auth/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+        <li><a href="/anno/list"><span class="glyphicon glyphicon-folder-open"></span> 查看所有標記</a></li>
+        <li><a href="/auth/logout"><span class="glyphicon glyphicon-log-out"></span> 登出</a></li>
       </ul>
     </div>
     <div class="progress navbar-right navbar-text" style="width: 25%; margin: 1%">
@@ -48,9 +48,9 @@
     </div>
     {% else %}
     <p class="navbar-text navbar-right">
-      <b><a href="/auth/login" class="navbar-link"><span class="glyphicon glyphicon-log-in"></span> Sign in</a></b>
-      &nbsp or &nbsp
-      <b><a href="/auth/register" class="navbar-link"><span class="glyphicon glyphicon-saved"></span> Sign up</a></b>
+      <b><a href="/auth/login" class="navbar-link"><span class="glyphicon glyphicon-log-in"></span>登入&nbsp&nbsp</a></b>
+      <!--&nbsp or &nbsp
+      <b><a href="/auth/register" class="navbar-link"><span class="glyphicon glyphicon-saved"></span> Sign up</a></b>-->
     </p>
     {% endif %}
     <div class="navbar-header">
@@ -67,8 +67,7 @@
     crossorigin="anonymous"></script>
   <div class="footer navbar-inverse navbar-fixed-bottom">
     <div class="container">
-      <span class="navbar-text">Copyright © <a href="https://aeolusbot.com/" target="_blank">Aeolusbot.com</a> All
-        rights reserved.</span>
+      <span class="navbar-text">{{ settings.FOOTER_TEXT }}</span>
     </div>
   </div>
 </body>

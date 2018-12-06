@@ -2,15 +2,15 @@
 {% block body %}
 
 <div class="container-fluid">
-  <h2>Annotated Verdicts</h2>
+  <h2>判決書標記</h2>
   <table class="table table-striped">
     <thead>
       <tr>
-        <th>Last Edited</th>
-        <th>Author</th>
-        <th>Identifier</th>
-        <th>Content</th>
-        <th>Status</th>
+        <th>最後編輯時間</th>
+        <th>標記者</th>
+        <th>流水號</th>
+        <th>判決書內文</th>
+        <th>狀態</th>
       </tr>
     </thead>
     <tbody>
@@ -29,11 +29,11 @@
 
   <ul class="pager">
     {% if annotations.has_previous %}
-    <li><a href="?page={{ annotations.previous_page_number }}&status={{ request.GET.status }}">&larr; Previous</a></li>
+    <li><a href="?page={{ annotations.previous_page_number }}&status={{ request.GET.status }}">&larr; 前一頁</a></li>
     {% endif %}
-    <span class="current">Page {{ annotations.number }} of {{ annotations.paginator.num_pages }}.</span>
+    <span class="current">第 {{ annotations.number }} / {{ annotations.paginator.num_pages }} 頁</span>
     {% if annotations.has_next %}
-    <li><a href="?page={{ annotations.next_page_number }}&status={{ request.GET.status }}">Next &rarr;</a></li>
+    <li><a href="?page={{ annotations.next_page_number }}&status={{ request.GET.status }}">下一頁 &rarr;</a></li>
     {% endif %}
   </ul>
 </div>

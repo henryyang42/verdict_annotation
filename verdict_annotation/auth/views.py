@@ -11,7 +11,7 @@ logger = logging.getLogger(__name__)
 
 
 def auth_login(request):
-    next_page = request.GET.get('next', '/editor/')
+    next_page = request.GET.get('next', '/anno/')
     if request.user.is_authenticated:
         return redirect(next_page)
 
@@ -32,11 +32,11 @@ def auth_login(request):
 
 def auth_logout(request):
     logout(request)
-    return redirect('/editor')
+    return redirect('/anno')
 
 
 def auth_register(request):
-    next_page = request.GET.get('next', '/editor/')
+    next_page = request.GET.get('next', '/anno/')
     user_form = UserCreationForm()
     if request.method == 'POST':
         user_form = UserCreationForm(data=request.POST)

@@ -26,7 +26,7 @@ class Verdict(models.Model):
 
 
 class Annotation(models.Model):
-    NOT_DONE, PENDING, DONE = 'Not done', 'Pass', 'Done'
+    NOT_DONE, PENDING, DONE = '待標記', 'Pass', '已完成'
     STATUS_CHOICES = (
         (NOT_DONE, NOT_DONE),
         (PENDING, PENDING),
@@ -46,4 +46,5 @@ class Annotation(models.Model):
 
     def save(self, **kwargs):
         self.update_time = timezone.now()
+        self.status = self.DONE
         super(Annotation, self).save(**kwargs)
