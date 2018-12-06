@@ -85,7 +85,7 @@ def editor(request):
                 assert(int(idx) < len(sentences) and int(idx) >= 0)
                 related_indexes.append(int(idx))
         annotation.annotation = json.dumps(related_indexes)
-        print(POST)
+        annotation.status = Annotation.DONE
         annotation.save()
     return redirect('/anno/')
 

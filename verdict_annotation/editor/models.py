@@ -46,5 +46,4 @@ class Annotation(models.Model):
 
     def save(self, **kwargs):
         self.update_time = timezone.now()
-        self.status = self.DONE
         super(Annotation, self).save(**kwargs)

@@ -40,8 +40,7 @@ if __name__ == '__main__':
             )
             Annotation.objects.create(
                 author=users[i % settings.ANNOTATORS],
-                verdict=verdict,
-                status=Annotation.DONE if i % 3 else Annotation.NOT_DONE  # Testing
+                verdict=verdict
             )
     with open('accounts.csv', 'w') as csvfile:
         fieldnames = ['username', 'password', 'annotation_ct']
