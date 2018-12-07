@@ -20,7 +20,7 @@
         <td width="6%">{{ annotation.update_time }}</td>
         <td width="6%">{{ annotation.author.username }}</td>
         <td width="12%">{{ annotation.verdict }}</td>
-        <td width="70%"><a href="/anno?id={{ annotation.verdict.id }}">{{ annotation.verdict.raw|truncatechars:200 }}</a></td>
+        <td width="70%"><a href="/anno?id={{ annotation.verdict.id }}">{{ annotation.verdict.raw|truncatechars:40 }}</a></td>
         <td width="6%">{{ annotation.status }}</td>
       </tr>
       {% endfor %}
