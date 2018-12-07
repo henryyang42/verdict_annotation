@@ -4,15 +4,13 @@
 
 {% block body %}
 <div class="container col-lg-offset-3 col-lg-6">
-  <h3>{{ settings.SITE_NAME }} Login</h3>
+  <h3>{{ settings.SITE_NAME }} 登入</h3>
 
   <form class="form-horizontal" method="post">
     {% csrf_token %}
     {{ form|bootstrap }}
     <div class="modal-footer">
-      <div style="margin-bottom: 10px" class="form-text text-muted">Haven't registered yet? Click <a href="/auth/register">here</a>
-        to sign up.</div>
-      <button type="submit" class="btn btn-primary">Login</button>
+      <button type="submit" class="btn btn-primary">登入</button>
     </div>
   </form>
 </div>
