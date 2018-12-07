@@ -1,7 +1,7 @@
 {% extends "index.html" %}
 {% block body %}
 
-<div class="container-fluid">
+<div class="table-responsive">
   <h2>判決書標記</h2>
   <table class="table table-striped">
     <thead>
@@ -17,10 +17,10 @@
 
       {% for annotation in annotations %}
       <tr>
-        <td width="6%">{{ annotation.update_time }}</td>
+        <td width="14%">{{ annotation.update_time }}</td>
         <td width="6%">{{ annotation.author.username }}</td>
         <td width="12%">{{ annotation.verdict }}</td>
-        <td width="70%"><a href="/anno?id={{ annotation.verdict.id }}">{{ annotation.verdict.raw|truncatechars:40 }}</a></td>
+        <td width="64%"><a href="/anno?id={{ annotation.verdict.id }}">{{ annotation.verdict.raw|truncatechars:100 }}</a></td>
         <td width="6%">{{ annotation.status }}</td>
       </tr>
       {% endfor %}
