@@ -26,17 +26,16 @@
       {% endfor %}
     </tbody>
   </table>
-
-  <ul class="pager">
-    {% if annotations.has_previous %}
-    <li><a href="?page={{ annotations.previous_page_number }}&status={{ request.GET.status }}">&larr; 前一頁</a></li>
-    {% endif %}
-    <span class="current">第 {{ annotations.number }} / {{ annotations.paginator.num_pages }} 頁</span>
-    {% if annotations.has_next %}
-    <li><a href="?page={{ annotations.next_page_number }}&status={{ request.GET.status }}">下一頁 &rarr;</a></li>
-    {% endif %}
-  </ul>
 </div>
+<ul class="pager">
+  {% if annotations.has_previous %}
+  <li><a href="?page={{ annotations.previous_page_number }}&status={{ request.GET.status }}">&larr; 前一頁</a></li>
+  {% endif %}
+  <span class="current">第 {{ annotations.number }} / {{ annotations.paginator.num_pages }} 頁</span>
+  {% if annotations.has_next %}
+  <li><a href="?page={{ annotations.next_page_number }}&status={{ request.GET.status }}">下一頁 &rarr;</a></li>
+  {% endif %}
+</ul>
 <script>
 
 </script>
