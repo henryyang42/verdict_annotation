@@ -27,36 +27,53 @@
 </head>
 
 <body>
-  <div class="navbar navbar-inverse" role="navigation" style="padding-right: 20px;">
-    {% if user.is_authenticated %}
-    <div class="dropdown navbar-right">
-      <a class="dropdown-toggle navbar-text" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-user"></span>
-        以 {{ user.username }} 登入
-        <span class="caret"></span></a>
-      <ul class="dropdown-menu">
-        <li><a href="/anno/list"><span class="glyphicon glyphicon-folder-open"></span> 查看所有標記</a></li>
-        <li><a href="/auth/logout"><span class="glyphicon glyphicon-log-out"></span> 登出</a></li>
-      </ul>
-    </div>
-    <div class="progress navbar-right navbar-text" style="width: 25%; margin: 1%">
-      <div class="progress-bar" style="width: {{ annotation_status.remaining_pct }}%">
-        <a href="/anno/list?status={{ annotation_status.Annotation.NOT_DONE }}" style="color:aliceblue">{{ annotation_status.remaining }} {{ annotation_status.Annotation.NOT_DONE }}</a>
-      </div>
-      <div class="progress-bar progress-bar-success" style="width: {{ annotation_status.done_pct }}%">
-        <a href="/anno/list?status={{ annotation_status.Annotation.DONE }}" style="color:aliceblue">{{ annotation_status.done }} {{ annotation_status.Annotation.DONE }}</a>
-      </div>
-    </div>
-    {% else %}
-    <p class="navbar-text navbar-right">
-      <b><a href="/auth/login" class="navbar-link"><span class="glyphicon glyphicon-log-in"></span>登入&nbsp&nbsp</a></b>
-      <!--&nbsp or &nbsp
-      <b><a href="/auth/register" class="navbar-link"><span class="glyphicon glyphicon-saved"></span> Sign up</a></b>-->
-    </p>
-    {% endif %}
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
       <a class="navbar-brand" href="/anno/list">{{ settings.SITE_NAME }}</a>
     </div>
-  </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="navbar-collapse">
+      {% if user.is_authenticated %}
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+            <span class="glyphicon glyphicon-user"></span>
+              以 {{ user.username }} 登入
+            <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu">
+            <li><a href="/anno/list"><span class="glyphicon glyphicon-folder-open"></span> 查看所有標記</a></li>
+            <li><a href="/auth/logout"><span class="glyphicon glyphicon-log-out"></span> 登出</a></li>
+          </ul>
+        </li>
+      </ul>
+      <div class="progress navbar-right navbar-text" style="width: 50%;">
+        <div class="progress-bar" style="width: {{ annotation_status.remaining_pct }}%">
+          <a href="/anno/list?status={{ annotation_status.Annotation.NOT_DONE }}" style="color:aliceblue">{{ annotation_status.remaining }} {{ annotation_status.Annotation.NOT_DONE }}</a>
+        </div>
+        <div class="progress-bar progress-bar-success" style="width: {{ annotation_status.done_pct }}%">
+          <a href="/anno/list?status={{ annotation_status.Annotation.DONE }}" style="color:aliceblue">{{ annotation_status.done }} {{ annotation_status.Annotation.DONE }}</a>
+        </div>
+      </div>
+      {% else %}
+      <p class="navbar-text navbar-right">
+        <b><a href="/auth/login" class="navbar-link"><span class="glyphicon glyphicon-log-in"></span>&nbsp登入&nbsp&nbsp</a></b>
+        <!--&nbsp or &nbsp
+        <b><a href="/auth/register" class="navbar-link"><span class="glyphicon glyphicon-saved"></span> Sign up</a></b>-->
+      </p>
+      {% endif %}
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
   <div class="container-fluid" style="margin-bottom: 3%">
     {% block body %}
 
